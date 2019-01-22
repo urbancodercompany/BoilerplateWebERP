@@ -16,5 +16,6 @@ namespace BoilerplateWebERP.API.Data
 
         //Calling Models to Populate the DB Table 
         public DbSet<Value> Values { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
