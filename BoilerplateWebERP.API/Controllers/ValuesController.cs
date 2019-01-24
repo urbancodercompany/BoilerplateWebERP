@@ -22,8 +22,9 @@ namespace BoilerplateWebERP.API.Controllers
         }
 
         // GET api/values
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetVAlues()
+        public async Task<IActionResult> GetValues()
         {
             var values = await _context.Values.ToListAsync();
 
