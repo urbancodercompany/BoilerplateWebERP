@@ -9,15 +9,18 @@ import { AuthService } from '../_services/auth.service';
 export class NavComponent implements OnInit {
   model: any = {};
 
-  constructor(private autServices: AuthService) { }
+  title = 'Boilerplate';
 
-  ngOnInit() { }
+  constructor(private authService: AuthService) { }
+
+  ngOnInit() {
+  }
 
   login() {
-    this.autServices.login(this.model).subscribe(next => {
+    this.authService.login(this.model).subscribe(next => {
       console.log('Logged in successfully');
     }, error => {
-      console.log('Failed to logged in!');
+      console.log(error);
     });
   }
 
@@ -28,6 +31,7 @@ export class NavComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token');
-    console.log('logged out!');
+    console.log('logged out');
   }
+
 }

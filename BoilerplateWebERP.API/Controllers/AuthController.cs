@@ -27,15 +27,10 @@ namespace BoilerplateWebERP.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            //validate request
-            // if (!ModelState.IsValid)
-            //     return BadRequest(ModelState);
-
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
-            //if the user exist throw an error
             if (await _repo.UserExists(userForRegisterDto.Username))
-                return BadRequest("Username already exists!");
+                return BadRequest("Username already exists");
 
             var userToCreate = new User
             {
@@ -45,42 +40,36 @@ namespace BoilerplateWebERP.API.Controllers
             var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
 
             return StatusCode(201);
-            //return CreatedAtRoute();
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            //we check if a user maches the data in the DB
             var userFromRepo = await _repo.Login(userForLoginDto.Username, userForLoginDto.Password);
 
-            //if not we send him an unauthorized page
             if (userFromRepo == null)
                 return Unauthorized();
 
-            // We get the Id and Username
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
                 new Claim(ClaimTypes.Name, userFromRepo.Username)
             };
 
-            //Will look for the key in AppSetting
             var key = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(_config.GetSection("AppSettings:Token").Value));
 
-            var credencials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            // we create a token with 24 hours expirations date
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = credencials
+                SigningCredentials = creds
             };
 
-            //JWT Token
             var tokenHandler = new JwtSecurityTokenHandler();
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return Ok(new

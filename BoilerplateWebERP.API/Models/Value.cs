@@ -19,8 +19,6 @@ namespace BoilerplateWebERP.API.Models
     public class Value
     {
         public int Id { get; set; }
-
-        [DisplayName("Nombre")]
         public string Name { get; set; }
     }
 }
