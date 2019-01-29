@@ -15,7 +15,6 @@ namespace BoilerplateWebERP.API.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly DataContext _context;
-
         public ValuesController(DataContext context)
         {
             _context = context;
@@ -36,7 +35,7 @@ namespace BoilerplateWebERP.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
-            var value = await _context.Values.FirstOrDefaultAsync(val => val.Id == id);
+            var value = await _context.Values.FirstOrDefaultAsync(x => x.Id == id);
 
             return Ok(value);
         }
