@@ -37,11 +37,11 @@ namespace BoilerplateWebERP.API
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            .AddJsonOptions(opt =>
-             {
-                 opt.SerializerSettings.ReferenceLoopHandling =
-                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-             });
+                .AddJsonOptions(opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
             services.AddCors();
             services.AddAutoMapper();
             services.AddTransient<Seed>();
@@ -88,7 +88,7 @@ namespace BoilerplateWebERP.API
             }
 
             // app.UseHttpsRedirection();
-            seeder.SeedUsers();
+            // seeder.SeedUsers();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseMvc();
