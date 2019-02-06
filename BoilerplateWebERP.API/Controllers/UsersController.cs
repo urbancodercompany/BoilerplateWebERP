@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BoilerplateWebERP.API.Data;
 using BoilerplateWebERP.API.Dtos;
+using BoilerplateWebERP.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoilerplateWebERP.API.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -33,7 +35,7 @@ namespace BoilerplateWebERP.API.Controllers
             return Ok(usersToReturn);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id);
