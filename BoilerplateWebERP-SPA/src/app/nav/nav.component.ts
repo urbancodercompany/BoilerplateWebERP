@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,13 @@ export class NavComponent implements OnInit {
   photoUrl: string;
 
   constructor(public authService: AuthService, private alertify: AlertifyService,
-      private router: Router) { }
+    private router: Router, public translate: TranslateService) {
+    translate.setDefaultLang('en');
+  }
+
+  useLanguage(language: string) {
+    this.translate.use(language);
+  }
 
   ngOnInit() {
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);

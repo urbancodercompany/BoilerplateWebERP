@@ -3,7 +3,7 @@
 }
 
 img {
-    max-height: 50px;
-    border: 2px solid white;
+    max-height: 40px;
     display: inline;
+    border-radius: 30px;
 }

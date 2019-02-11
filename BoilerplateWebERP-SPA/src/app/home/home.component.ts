@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent implements OnInit {
   registerMode = false;
 
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {

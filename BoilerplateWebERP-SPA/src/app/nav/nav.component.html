@@ -17,14 +17,13 @@
       </li>
     </ul>
 
-    <div *ngIf="loggedIn()" class="dropdown" dropdown>
-      <span class="mr-1">
-        <img src="{{photoUrl || '../../assets/user.png'}}" alt="">
-      </span>
+    <div *ngIf="loggedIn()" class="dropdown mr-4" dropdown>
       <a class="dropdown-toggle text-light" dropdownToggle>
+        <span class="mr-1">
+          <img src="{{photoUrl || '../../assets/user.png'}}" alt="">
+        </span>
         Welcome {{authService.decodedToken?.unique_name | titlecase}}
       </a>
-
       <div class="dropdown-menu mt-3" *dropdownMenu>
         <a class="dropdown-item" [routerLink]="['/member/edit']">
           <i class="fa fa-user"></i> Edit Profile</a>
@@ -34,9 +33,28 @@
       </div>
     </div>
 
+
+    <div *ngIf="loggedIn()" class="dropdown" dropdown>
+      <a class="dropdown-toggle text-light" dropdownToggle>
+        <span class="mr-1">
+          <span class="flag-icon flag-icon-us flag-icon-squared"></span>
+        </span>
+        {{translate.currentLang ? translate.currentLang : translate.defaultLang | uppercase}}
+      </a>
+      <div class="dropdown-menu mt-3" *dropdownMenu>
+        <a *ngFor="let item of translate.getLangs();" class="dropdown-item" (click)="useLanguage('en')">
+          <span class="flag-icon flag-icon-us flag-icon-squared"></span> {{ item }}</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="useLanguage('fr')">
+          <span class="flag-icon flag-icon-fr flag-icon-squared"></span> Fr</a>
+      </div>
+    </div>
+
     <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
-      <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username" required [(ngModel)]="model.username">
-      <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" required [(ngModel)]="model.password">
+      <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username" required
+        [(ngModel)]="model.username">
+      <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" required
+        [(ngModel)]="model.password">
       <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
     </form>
   </div>

@@ -8,6 +8,14 @@
     </div>
   </div>
 
+  <br />
+  <div class="text-center">
+    <!-- translation: translation pipe -->
+    <h1>{{ 'demo.title' | translate }}</h1>
+    <!-- translation: directive (key as content of element) -->
+    <p translate>demo.text</p>
+  </div>
+
   <div *ngIf="registerMode" class="container">
     <div class="row justify-content-center">
       <div class="col-4">
